@@ -16,8 +16,9 @@ export class Auth0Provider extends Component {
   };
 
   config = {
-    domain: 'dev-56k7k0fp.auth0.com',
-    client_id: 'MwYED1Es19j5nIobgCRREb7I5TRT8un6',
+    domain: "dev-56k7k0fp.auth0.com",
+    client_id: "MwYED1Es19j5nIobgCRREb7I5TRT8un6",
+    audience: "https://dailyplanner/api",
     redirect_uri: "http://localhost:3000/",
   };
 
@@ -63,6 +64,8 @@ export class Auth0Provider extends Component {
       isAuthenticated,
       user,
       loginWithRedirect: (...p) => auth0Client.loginWithRedirect(...p),
+      getTokenSilently: (...p) => auth0Client.getTokenSilently(...p),
+      getIdTokenClaims: (...p) => auth0Client.getIdTokenClaims(...p),
       logout: (...p) => auth0Client.logout(...p),
     };
 
@@ -73,4 +76,3 @@ export class Auth0Provider extends Component {
     );
   }
 }
-

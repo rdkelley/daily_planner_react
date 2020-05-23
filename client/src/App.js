@@ -1,10 +1,15 @@
 import React, { useContext } from "react";
 import { auth0Context } from "./contexts/auth0Context";
+import axios from "axios";
 
 function App() {
-  const { isLoading, user, loginWithRedirect, logout } = useContext(
-    auth0Context
-  );
+  const {
+    isLoading,
+    user,
+    loginWithRedirect,
+    logout,
+    getTokenSilently,
+  } = useContext(auth0Context);
 
   return (
     <div className="App">
@@ -27,6 +32,27 @@ function App() {
                 className="button is-small is-dark"
               >
                 Logout
+              </button>
+            </div>
+            <div>
+              <button
+                onClick={async () => {
+                  // This calls a test route on the backend to make sure the JWT passes
+                  let token = await getTokenSilently();
+
+                  const response = await axios.get(
+                    "http://localhost:3001/tasks",
+                    {
+                      headers: {
+                        Authorization: `Bearer ${token}`,
+                      },
+                    }
+                  );
+
+                  console.log(response);
+                }}
+              >
+                Get Token and Test API
               </button>
             </div>
           </>
